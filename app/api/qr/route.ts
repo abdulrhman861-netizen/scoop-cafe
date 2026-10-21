@@ -1,0 +1,4 @@
+import QRCode from 'qrcode';
+import {siteOrigin} from '../../../lib/site-url';
+export const runtime='nodejs';
+export async function GET(req:Request){const q=new URL(req.url).searchParams;const menu=q.get('menu')==='1';const token=q.get('token')??'';if(!menu&&!/^[a-f0-9-]{36}$/.test(token))return new Response('Invalid token',{status:400});const value=siteOrigin(req)+(menu?'/':'/track?order='+encodeURIComponent(token));if(q.get('format')==='png'){const png=await QRCode.toBuffer(value,{width:1400,errorCorrectionLevel:'M',margin:4});return new Response(new Uint8Array(png),{headers:{'Content-Type':'image/png','Content-Disposition':q.has('download')?'attachment; filename="Scoop_Menu_QR.png"':'inline','Cache-Control':'no-store'}});}const svg=await QRCode.toString(value,{type:'svg',errorCorrectionLevel:'M',margin:4,width:260});return new Response(svg,{headers:{'Content-Type':'image/svg+xml','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});}

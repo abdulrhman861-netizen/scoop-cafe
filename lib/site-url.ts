@@ -1,0 +1,1 @@
+export function siteOrigin(req:Request){const configured=process.env.SITE_URL;if(configured){const u=new URL(configured);if(!['https:','http:'].includes(u.protocol))throw Error('Invalid SITE_URL');return u.origin;}return new URL(req.url).origin;}

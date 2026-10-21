@@ -1,0 +1,2 @@
+import { env } from '../../../../lib/runtime';
+export async function GET(_req:Request,{params}:{params:Promise<{id:string}>}){const {id}=await params;const f=await env.BUCKET!.get(id);if(!f)return new Response('Not found',{status:404});return new Response(f.body,{headers:{'Content-Type':f.httpMetadata?.contentType??'image/jpeg','Cache-Control':'public,max-age=86400','X-Content-Type-Options':'nosniff'}});}
