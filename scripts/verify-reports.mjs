@@ -1,0 +1,21 @@
+import {PGlite} from '@electric-sql/pglite';import fs from 'node:fs';import vm from 'node:vm';import ts from 'typescript';import assert from 'node:assert/strict';
+const pg=new PGlite();await pg.exec('CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;');await pg.exec(fs.readFileSync('supabase/001_scoop_schema.sql','utf8'));await pg.exec(fs.readFileSync('supabase/003_scoop_reports.sql','utf8'));
+let seq=0;async function order({source='web',status='new',data={},created='2026-10-25T21:10:00Z'}={}){await pg.query('INSERT INTO public.scoop_orders(token,nonce,data,status,created) VALUES($1,$2,$3::jsonb,$4,$5)',[crypto.randomUUID(),'reports-'+(++seq),JSON.stringify({source,total:1000,paid:false,items:[{name:'قهوة',qty:1}],...data}),status,created]);}
+for(let i=0;i<205;i++)await order();
+await order({data:{total:8000,paid:true,items:[{name:'باقة',offer:true,qty:2,bundleItems:[{name:'قهوة',qty:1},{name:'كرواسان',qty:2}]}]}});
+await order({status:'done',data:{subtotal:3000,discount:1000,delivery:500,total:2500,paid:true,items:[{name:'قهوة',qty:3}]}});
+await order({status:'cancelled',data:{total:999999,paid:true,items:[{name:'قهوة',qty:100}]}});
+await order({data:{kind:'queue',total:null,items:[]}});
+await order({source:'kiosk',data:{total:5000,items:[{name:'قهوة',qty:5}]}});
+await order({created:'2026-10-25T20:59:59Z'});await order({created:'2026-10-26T21:00:00Z'});
+let identity={role:'manager'};let failure=null;
+const rpc=async(name,args)=>{if(failure)return {data:null,error:failure};assert.equal(name,'scoop_reports');const {rows}=await pg.query('SELECT public.scoop_reports($1::date,$2::date,$3) as report',[args.p_from,args.p_to,args.p_source]);return {data:rows[0].report,error:null}};
+const exports={};const code=ts.transpileModule(fs.readFileSync('app/api/reports/route.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;vm.runInNewContext(code,{exports,require:n=>n.endsWith('staff-auth')?{staffFromHeaders:async()=>identity}:{databaseConfigured:()=>true,getSupabase:()=>({rpc})},Response,URL,Date});
+async function get(query='from=2026-10-26&to=2026-10-26&source=web'){const r=await exports.GET(new Request('https://scoop-cafe.vercel.app/api/reports?'+query));return {status:r.status,...await r.json()};}
+let r=await get();assert.equal(r.status,200);const report=r.report;assert.equal(report.summary.orders,208);assert.equal(report.summary.cancelled,1);assert.equal(report.summary.completed,1);assert.equal(report.summary.pending,206);assert.equal(report.summary.order_value,215500);assert.equal(report.summary.collected,10500);assert.equal(report.daily.length,1);assert.equal(report.daily[0].day,'2026-10-26');assert.equal(report.items[0].name,'قهوة');assert.equal(report.items[0].quantity,210);assert.equal(report.items[0].orders,207);assert.equal(report.items[1].quantity,4);assert.ok(!JSON.stringify(report).includes('token'));
+r=await get('from=2026-10-26&to=2026-10-26&source=all');assert.equal(r.report.summary.orders,209);assert.equal(r.report.items[0].quantity,215);
+r=await get('from=2026-10-24&to=2026-10-24');assert.equal(r.report.summary.orders,0);assert.equal(r.report.summary.order_value,0);assert.equal(r.report.daily[0].orders,0);assert.equal(r.report.items.length,0);
+assert.equal((await get('from=2026-02-30&to=2026-03-01')).status,400);assert.equal((await get('from=2024-01-01&to=2026-01-01')).status,400);assert.equal((await get('from=2026-10-27&to=2026-10-26')).status,400);
+identity={role:'cashier'};assert.equal((await get()).status,403);identity=null;assert.equal((await get()).status,401);identity={role:'manager'};failure={code:'PGRST202'};assert.match((await get()).error,/003_scoop_reports/);
+await pg.exec('SET ROLE anon');await assert.rejects(()=>pg.query("SELECT public.scoop_reports('2026-10-26','2026-10-26','web')"),/permission denied/i);await pg.exec('RESET ROLE');await pg.exec('SET ROLE service_role');const service=await pg.query("SELECT public.scoop_reports('2026-10-26','2026-10-26','web') as report");assert.equal(service.rows[0].report.summary.orders,208);await pg.exec('RESET ROLE');await pg.close();
+console.log('PASS: reports include >200 orders, Baghdad midnight boundaries, paid vs order value, cancelled/queue exclusion, bundle quantities, source filters, empty days, date limits, manager-only API and database permissions');
