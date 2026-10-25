@@ -13,7 +13,7 @@ Before deployment:
 
 No secret keys or initial passwords are committed. Existing prototype tables are retained; optional import is documented in the Arabic guide. Loyalty settings are draft-only; background push notifications are not included.
 
-The customer menu is at `/`; the independent staff login is at `/admin`. Receipt and marketing QR codes use the deployed origin or `SITE_URL`.
+The customer menu is at `/`; the independent staff login is at `/admin`. Receipt and marketing QR codes use the public production domain on Vercel, or `SITE_URL`.
 
 ```sh
 npm ci

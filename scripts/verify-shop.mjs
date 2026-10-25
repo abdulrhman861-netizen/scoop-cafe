@@ -3,13 +3,15 @@ const sql=new DatabaseSync(':memory:');sql.exec(fs.readFileSync('drizzle/0000_pr
 let user={userId:'owner-test',email:'owner@test.com'};
 sql.prepare("INSERT INTO records(id,kind,data) VALUES('owner','owner',?)").run(JSON.stringify({id:user.userId}));
 const DB={prepare(s){let args=[];const b={bind(...a){args=a;return b},async first(){return sql.prepare(s).get(...args)??null},async all(){return {results:sql.prepare(s).all(...args)}},async run(){return sql.prepare(s).run(...args)}};return b}};
-const compiled=ts.transpileModule(fs.readFileSync('app/api/shop/route.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;const exports={};vm.runInNewContext(compiled,{exports,require:n=>n.endsWith('/runtime')?{env:{DB}}:n.endsWith('staff-auth')?{getStaffIdentity:async()=>user?{role:user.userId==='owner-test'?'manager':'employee'}:null}:{getChatGPTUser:async()=>user},Response,Request,URL,crypto,File,console});
+const promos={};vm.runInNewContext(ts.transpileModule(fs.readFileSync('lib/promotions.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,{exports:promos,Error,Math});
+const compiled=ts.transpileModule(fs.readFileSync('app/api/shop/route.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;const exports={};vm.runInNewContext(compiled,{exports,require:n=>n.endsWith('promotions')?promos:n.endsWith('site-url')?{siteOrigin:req=>new URL(req.url).origin}:n.endsWith('/runtime')?{env:{DB}}:n.endsWith('staff-auth')?{getStaffIdentity:async()=>user?{role:user.userId==='owner-test'?'manager':'employee'}:null}:{getChatGPTUser:async()=>user},Response,Request,URL,crypto,File,console});
 const post=async b=>{const r=await exports.POST(new Request('https://test.local/api/shop',{method:'POST',headers:{origin:'https://test.local','Content-Type':'application/json'},body:JSON.stringify(b)}));return {status:r.status,data:await r.json()}};
 let r=await exports.GET(new Request('https://test.local/api/shop?admin=1'));let data=await r.json();assert.equal(data.role,'manager');assert.equal(data.products.length,3);assert.equal(data.settings.open,false);
 let p=data.products.find(p=>p.id==='turkish');p.price=2000;p.extras=[{id:'shot',name:'شوت',price:500,available:true}];assert.equal((await post({action:'product',product:p})).status,200);
 assert.equal((await post({action:'settings',settings:{...data.settings,open:true,deliveryFee:1000}})).status,200);
 user=null;assert.equal((await post({action:'product',product:p})).status,403);
 const order={action:'order',name:'طالب تجريبي',phone:'',method:'pickup',items:[{id:'turkish',qty:2,sweetness:'وسط',extras:['shot'],unit:1}],nonce:'test-nonce'};
+assert.equal((await post({...order,nonce:''})).status,400);assert.equal((await post({...order,nonce:'bad-object',items:[null]})).status,400);
 let first=await post(order);assert.equal(first.status,200);let duplicate=await post(order);assert.equal(first.data.order.id,duplicate.data.order.id);
 r=await exports.GET(new Request('https://test.local/api/shop?token='+first.data.order.token));let tracked=await r.json();assert.equal(tracked.order.data.total,5000);assert.equal(tracked.order.status,'new');
 assert.equal((await post({...order,nonce:'bad',items:[{...order.items[0],qty:-1}]})).status,400);
@@ -65,3 +67,21 @@ r=await exports.GET(new Request('https://test.local/api/shop?admin=1'));admin=aw
 user={userId:'employee-test',email:'employee@test.com'};assert.equal((await post({action:'loyaltyDraft',loyalty})).status,403);assert.equal((await post({action:'offer',offer})).status,403);
 user=null;r=await exports.GET(new Request('https://test.local/api/shop'));pub=await r.json();assert.equal(pub.announcements.enabled,true);assert.equal(pub.loyalty,undefined);
 console.log('PASS: quick tickets without amounts, unified queue, bundle pricing/expiry/stock, manager-only announcements and draft loyalty; existing roles and order stages');
+
+// Promotions are authorized and priced on the server, including delivery and bundle orders.
+user={userId:'owner-test'};
+await post({action:'settings',settings:{...data.settings,open:true,deliveryEnabled:true,deliveryFee:1000}});
+const coupon={code:'SCOOP10',type:'percent',value:10,minOrder:3000,startDate:'',endDate:'',enabled:true};
+assert.equal((await post({action:'coupon',coupon})).status,200);
+assert.equal((await post({action:'coupon',coupon:{...coupon,value:101}})).status,400);
+user=null;assert.equal((await post({action:'coupon',coupon})).status,403);
+assert.equal((await post({action:'quoteCoupon',code:'scoop10',subtotal:5000})).data.discount,500);
+assert.equal((await post({action:'quoteCoupon',code:'scoop10',subtotal:2000})).status,400);
+const discounted=await post({...order,nonce:'discounted',method:'delivery',phone:'07701234567',location:'كلية الهندسة',promoCode:'scoop10',discount:999999,total:1});assert.equal(discounted.status,200);
+r=await exports.GET(new Request('https://test.local/api/shop?token='+discounted.data.order.token));const priced=(await r.json()).order.data;assert.equal(priced.subtotal,5000);assert.equal(priced.discount,500);assert.equal(priced.total,5500);assert.equal(priced.promoCode,'SCOOP10');
+assert.equal((await post({...order,nonce:'invalid-code',promoCode:'DOESNOTEXIST'})).status,400);
+user={userId:'owner-test'};await post({action:'coupon',coupon:{...coupon,endDate:'2000-01-01'}});user=null;assert.equal((await post({...order,nonce:'expired-code',promoCode:'SCOOP10'})).status,400);
+user={userId:'owner-test'};await post({action:'coupon',coupon:{...coupon,code:'FREE',type:'fixed',value:10000,minOrder:0}});user=null;
+const free=await post({...order,nonce:'fixed-code',promoCode:'FREE',method:'delivery',phone:'07701234567',location:'مدخل الهندسة'});r=await exports.GET(new Request('https://test.local/api/shop?token='+free.data.order.token));assert.equal((await r.json()).order.data.total,1000);
+r=await exports.GET(new Request('https://test.local/api/shop'));assert.equal((await r.json()).coupons,undefined);
+console.log('PASS: promo authorization, expiry/minimum, percent/fixed discounts, server totals and unchanged delivery fee');
