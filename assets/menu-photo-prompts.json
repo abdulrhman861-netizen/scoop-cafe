@@ -1,0 +1,205 @@
+[
+  {
+    "key": "scoop-latte",
+    "name": "سكوب لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A classic hot cafe latte, white porcelain medium cup and saucer, silky tan espresso crema with restrained white milk-foam rosetta. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop, entire cup, handle and saucer centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink textures. No text, no logos, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "tiramisu-latte",
+    "name": "تراميسيو لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot tiramisu-flavoured latte in a white porcelain cup and saucer, ivory microfoam lightly dusted with cocoa, one small ladyfinger beside the saucer. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop, entire cup, handle and saucer centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink textures. No text, no logos, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "dark-mocha",
+    "name": "دارك موكا",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot dark chocolate mocha in a white porcelain cup and saucer, rich deep brown surface, modest cream swirl with dark chocolate shavings. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop, entire cup, handle and saucer centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink textures. No text, no logos, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "turkish-hazelnut",
+    "name": "قهوة تركية بالبندق",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A small white porcelain Turkish coffee demitasse and matching saucer, fine rich foamy coffee surface, three natural hazelnuts beside the saucer. No latte art. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop, entire cup, handle and saucer centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink textures. No text, no logos, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "espresso-double",
+    "name": "اسبرسو دبل",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A double espresso in a small white porcelain espresso cup and saucer, darker generous espresso volume with mottled golden crema, no milk or cream. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "chocolate-coffee",
+    "name": "قهوة چكليتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot chocolate-flavoured coffee in a white porcelain cup and saucer, rich tan coffee surface with a fine chocolate drizzle, two small dark chocolate pieces beside saucer. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "hot-nutella",
+    "name": "هوت نوتيلا",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot hazelnut chocolate milk drink in a white porcelain mug and saucer, creamy brown chocolate surface with a small chocolate cream swirl and a few toasted hazelnut pieces. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "rose-latte",
+    "name": "روز لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A rose flavoured hot latte in a white porcelain cup and saucer, light ivory pink-tinged microfoam with a tiny pinch of dried edible rose petals, natural subtle pink not artificial neon. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "hot-sahlab",
+    "name": "هوت سحلب",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A traditional hot Iraqi sahlab milk pudding drink in a white porcelain mug and saucer, thick creamy ivory surface dusted with a little cinnamon and finely crushed pistachio. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "white-mocha",
+    "name": "وايت موكا",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot white chocolate mocha in a white porcelain cup and saucer, pale creamy coffee and milk foam, delicate white chocolate curls as a modest topping. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "espresso-single",
+    "name": "اسبرسو سنكل",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A single espresso in a very small white porcelain demitasse and saucer, shallow strong dark coffee with thick honey-brown crema, no milk. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "cappuccino",
+    "name": "كابتشينو",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A traditional hot cappuccino in a white porcelain cup and saucer, pillowy white microfoam and tan crema ring with simple leaf latte art. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "latte-classic",
+    "name": "لاتيه كلاسك",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A classic hot cafe latte in a white porcelain cup and saucer, glossy ivory microfoam with a crisp heart latte-art pattern and warm tan crema. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "turkish-mint",
+    "name": "قهوة تركية بالنعناع",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A small white porcelain Turkish coffee demitasse and saucer with fine dark brown foamy coffee, three fresh green mint leaves resting beside saucer, no milk. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "karak-tea",
+    "name": "شاي كرك",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot Iraqi karak milk tea in a clear handled heatproof glass cup and small white saucer, golden caramel milk tea, one cardamom pod beside saucer. No coffee or whipped cream. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "spanish-latte",
+    "name": "سبانش لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: An iced Spanish latte in a clear takeaway plastic cup with flat clear lid, creamy condensed milk at the bottom blending upward into espresso and milk, realistic ice cubes, no straw. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "turkish-double",
+    "name": "قهوة تركية دبل",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A double Turkish coffee in a medium-small white porcelain cup and matching saucer, abundant rich brown fine foamy Turkish coffee, no milk. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "hazelnut-latte",
+    "name": "بندق لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot hazelnut latte in a white porcelain cup and saucer, tan espresso and silky milk foam with a little hazelnut crumble, two whole hazelnuts beside saucer. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "tea",
+    "name": "شاي",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A traditional Iraqi black tea in a clear waist-shaped istikan tea glass on a small white saucer, clear deep amber reddish brewed tea, no milk, no spoon or sugar cubes. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "croissant",
+    "name": "كرواسان",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: One plain fresh golden butter croissant on a simple small white plate, naturally curved shape, exceptionally realistic flaky laminated pastry texture, no filling or icing, entire pastry visible. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "americano",
+    "name": "أمريكانو",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot Americano black coffee in a medium white porcelain cup and saucer, dark translucent brown coffee surface with a slight thin golden crema ring, no milk or toppings. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "hot-chocolate",
+    "name": "هوت جوكليت",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot chocolate in a white porcelain mug and saucer, rich dark cocoa drink, modest swirl of whipped cream lightly dusted with cocoa, a small chocolate piece beside saucer. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "nescafe",
+    "name": "نسكافيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot instant milk coffee in a white porcelain mug and saucer, uniform creamy light caramel surface with fine tiny bubbles, no elaborate latte art, no toppings. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "cookies-latte",
+    "name": "كوكيز لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot cookies latte in a white porcelain cup and saucer, creamy latte with a little whipped milk foam and dark sandwich-cookie crumbs, one small chocolate cookie beside saucer. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "hot-lotus",
+    "name": "هوت لوتس",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot caramel biscuit milk drink in a white porcelain cup and saucer, creamy beige surface with a modest caramel biscuit crumb topping, one rectangular caramel biscuit beside saucer without visible branding. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "vanilla-latte",
+    "name": "فانيلا لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot vanilla cafe latte in a white porcelain cup and saucer, silky ivory foam with subtle heart latte art, a short natural vanilla pod segment beside saucer, no flowers. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "caramel-latte",
+    "name": "كراميل لاتيه",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A hot caramel latte in a white porcelain cup and saucer, tan coffee and white microfoam with fine appetizing caramel drizzle, no excessive cream. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "turkish-coffee",
+    "name": "قهوة تركية",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: A traditional plain Turkish coffee in a small white porcelain demitasse cup and matching saucer, thick fine dark golden-brown coffee foam, no milk, no toppings, no garnish. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  },
+  {
+    "key": "water",
+    "name": "ماء",
+    "prompt": "Use case: product-mockup. Asset type: SCOOP Cafe online menu product photograph. Subject: One realistic unopened 500 ml clear PET mineral water bottle standing upright, silver-white cap, subtle condensation, cream label with a small olive green coffee cup icon and the exact uppercase brand text SCOOP, smaller word Cafe. No other text. Photorealistic real food photography, NOT illustration or 3D render. Square 1024x1024 composition, camera at 35 degrees above tabletop (bottle at near frontal angle), entire item centered with generous white space and no cropped edges, product occupies roughly 65 percent of frame. Seamless pure white #FFFFFF background and white surface, soft neutral studio light, delicate realistic contact shadow only, clean high key catalogue photography. True natural drink and food textures. No text or logo except the specifically requested SCOOP bottle label, no prices, no typography, no watermark, no hands, no decorative scene or colored background. This is a single image of this one menu item only. Match a consistent professional white-background cafe product photo collection.",
+    "mode": "built-in",
+    "transparent_background": false
+  }
+]

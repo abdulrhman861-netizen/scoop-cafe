@@ -1,7 +1,7 @@
 import {PGlite} from '@electric-sql/pglite';import fs from 'node:fs';import vm from 'node:vm';import ts from 'typescript';import assert from 'node:assert/strict';
-const pg=new PGlite();await pg.exec('CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;');await pg.exec(fs.readFileSync('supabase/001_scoop_schema.sql','utf8'));await pg.exec(fs.readFileSync('supabase/004_scoop_categories.sql','utf8'));await pg.exec(fs.readFileSync('supabase/005_scoop_product_delete.sql','utf8'));
-const fake={async rpc(name,{p_op,p_args,p_action,p_payload}){try{if(name==='scoop_catalog'){const {rows}=await pg.query('SELECT public.scoop_catalog($1,$2::jsonb) AS row',[p_action,JSON.stringify(p_payload)]);return {data:rows[0].row,error:null}}const {rows}=await pg.query('SELECT public.scoop_db($1,$2::jsonb) AS row',[p_op,JSON.stringify(p_args)]);return {data:rows.map(r=>r.row),error:null}}catch(error){return {data:null,error}}}};
-let reqHeaders=new Headers();const exported=new Map();function load(file){if(exported.has(file))return exported.get(file);const exports={};const code=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;vm.runInNewContext(code,{exports,require:n=>n.endsWith('product-sizes')?load('lib/product-sizes.ts'):n.endsWith('supabase-server')?{getSupabase:()=>fake,databaseConfigured:()=>true}:n.endsWith('promotions')?load('lib/promotions.ts'):n.endsWith('site-url')?{siteOrigin:req=>new URL(req.url).origin}:n.endsWith('/runtime')?load('lib/runtime.ts'):n.endsWith('staff-auth')?load('app/staff-auth.ts'):n==='next/headers'?{headers:async()=>reqHeaders}:null,Response,Request,URL,Headers,TextEncoder,crypto,File,Buffer,process:{env:{}},console});exported.set(file,exports);return exports;}
+const pg=new PGlite();await pg.exec('CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;');await pg.exec(fs.readFileSync('supabase/001_scoop_schema.sql','utf8'));await pg.exec(fs.readFileSync('supabase/004_scoop_categories.sql','utf8'));await pg.exec(fs.readFileSync('supabase/005_scoop_product_delete.sql','utf8'));await pg.exec(fs.readFileSync('supabase/006_scoop_menu_photos.sql','utf8'));
+const fake={async rpc(name,{p_op,p_args,p_action,p_payload,p_photos}){try{if(name==='scoop_apply_menu_photos'){const {rows}=await pg.query('SELECT public.scoop_apply_menu_photos($1::jsonb) AS row',[JSON.stringify(p_photos)]);return {data:rows[0].row,error:null}}if(name==='scoop_catalog'){const {rows}=await pg.query('SELECT public.scoop_catalog($1,$2::jsonb) AS row',[p_action,JSON.stringify(p_payload)]);return {data:rows[0].row,error:null}}const {rows}=await pg.query('SELECT public.scoop_db($1,$2::jsonb) AS row',[p_op,JSON.stringify(p_args)]);return {data:rows.map(r=>r.row),error:null}}catch(error){return {data:null,error}}}};
+let reqHeaders=new Headers();const exported=new Map();function load(file){if(exported.has(file))return exported.get(file);const exports={};const code=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;vm.runInNewContext(code,{exports,require:n=>n.endsWith('menu-photos')?load('lib/menu-photos.ts'):n.endsWith('product-sizes')?load('lib/product-sizes.ts'):n.endsWith('supabase-server')?{getSupabase:()=>fake,databaseConfigured:()=>true}:n.endsWith('promotions')?load('lib/promotions.ts'):n.endsWith('site-url')?{siteOrigin:req=>new URL(req.url).origin}:n.endsWith('/runtime')?load('lib/runtime.ts'):n.endsWith('staff-auth')?load('app/staff-auth.ts'):n==='next/headers'?{headers:async()=>reqHeaders}:null,Response,Request,URL,Headers,TextEncoder,crypto,File,Buffer,process:{env:{}},console});exported.set(file,exports);return exports;}
 const runtime=load('lib/runtime.ts'),auth=load('app/staff-auth.ts'),shop=load('app/api/shop/route.ts');
 async function call(method,body=null,cookie='',query=''){reqHeaders=new Headers({origin:'https://new-cafe.example','Content-Type':'application/json',cookie});const req=new Request('https://new-cafe.example/api/shop'+query,{method,headers:reqHeaders,...(body?{body:JSON.stringify(body)}:{})});const response=await shop[method](req);return {status:response.status,data:await response.json()};}
 let r=await call('GET');assert.equal(r.status,200);assert.equal(r.data.products.length,3);assert.equal(r.data.role,null);
@@ -121,7 +121,37 @@ assert.equal((await call('POST',{action:'product',product:{...seededWater,id:'te
 assert.equal((await call('POST',{action:'removeProduct',id:'temp-product'},cookie)).status,200);
 assert.equal((await call('POST',{action:'removeCategory',id:temporary.id},cookie)).status,200);
 console.log('PASS: manager-only product deletion, no seed resurrection or stale edit/availability restore, linked offers stopped, historical orders retained and empty category deletion');
+
+const matcher=load('lib/menu-photos.ts');assert.equal(matcher.menuPhotos.length,29);assert.equal(matcher.menuPhoto('قهوة تركية. بالبندق').key,'turkish-hazelnut');assert.equal(matcher.menuPhoto('  اسبريسو سنكل ').key,'espresso-single');assert.equal(matcher.menuPhoto('فارغ'),null);
+const photoProd={...(await call('GET')).data.products.find(x=>x.id==='turkish'),name:'قهوة تركية',image:'/coffee.svg'};
+await call('POST',{action:'product',product:photoProd},cookie);
+const beforePhoto=(await call('GET')).data.products.find(x=>x.id==='turkish');
+assert.equal((await call('POST',{action:'applyMenuPhotos',ids:['turkish']},'')).status,403);
+assert.equal((await call('POST',{action:'applyMenuPhotos',ids:['turkish']},cashier)).status,403);
+assert.equal((await call('POST',{action:'applyMenuPhotos',ids:[]},cookie)).status,400);
+let photoResult=await call('POST',{action:'applyMenuPhotos',ids:['turkish','water']},cookie);assert.equal(photoResult.status,200);assert.deepEqual(photoResult.data.applied,['turkish']);
+let afterPhoto=(await call('GET')).data.products.find(x=>x.id==='turkish');assert.equal(afterPhoto.image,'/menu-photos/turkish-coffee.webp');assert.deepEqual({...afterPhoto,image:beforePhoto.image},beforePhoto);
+assert.equal((await call('POST',{action:'product',product:afterPhoto},cookie)).status,200);assert.equal((await call('GET')).data.products.find(x=>x.id==='turkish').image,afterPhoto.image);
+// Compare-and-set image writes avoid overwriting a concurrent manual change.
+let pr=await fake.rpc('scoop_apply_menu_photos',{p_photos:[{id:'turkish',image:'/menu-photos/tea.webp',expectedName:afterPhoto.name,expectedImage:'/old.svg'}]});assert.deepEqual(pr.data.skipped,['turkish']);
+assert.equal((await call('GET')).data.products.find(x=>x.id==='turkish').image,afterPhoto.image);
+const valid={id:'turkish',image:'/menu-photos/tea.webp',expectedName:afterPhoto.name,expectedImage:afterPhoto.image};
+pr=await fake.rpc('scoop_apply_menu_photos',{p_photos:[valid,{...valid,image:'https://external.example/image.webp'}]});assert.ok(pr.error);assert.equal((await call('GET')).data.products.find(x=>x.id==='turkish').image,afterPhoto.image);
+await pg.exec('SET ROLE anon');await assert.rejects(()=>pg.query("SELECT public.scoop_apply_menu_photos('[]'::jsonb)"),/permission denied/);await pg.exec('RESET ROLE');
+// Owner-requested complete reset covers every status, all financial orders and quick tickets.
+for(const status of ['new','received','preparing','ready','out','done','cancelled'])await pg.query("INSERT INTO public.scoop_orders(token,nonce,data,status) VALUES(gen_random_uuid(),$1,$2,$3)",['all-status-reset-'+status,JSON.stringify({name:'اختبار التصفير',source:'web',items:[],total:1000}),status]);
+const resetOrders=(await pg.query('SELECT count(*)::int AS n FROM public.scoop_orders')).rows[0].n;
+const archivedBefore=(await pg.query('SELECT count(*)::int AS n FROM public.scoop_launch_order_archive')).rows[0].n;
+const preserved=(await call('GET')).data.products;
+await pg.exec(fs.readFileSync('START_1_6_WITH_RESET.sql','utf8'));
+assert.equal((await pg.query('SELECT count(*)::int AS n FROM public.scoop_orders')).rows[0].n,0);
+assert.equal((await pg.query('SELECT count(*)::int AS n FROM public.scoop_launch_order_archive')).rows[0].n,archivedBefore+resetOrders);
+assert.deepEqual((await call('GET')).data.products,preserved);assert.equal((await call('GET')).data.settings.open,false);
+assert.equal((await call('GET',null,cookie,'?admin=1')).data.role,'manager');
+assert.equal((await call('POST',{action:'queueTicket',nonce:'new-start-1-6'},cookie)).data.order.id,1);
+console.log('PASS: 29 exact photo mappings, manager-only batch images, image-only updates, stale-image and atomic rollback protection, all-status reset preserves menu/accounts and returns queue to 1');
 await pg.close();
+
 
 
 
