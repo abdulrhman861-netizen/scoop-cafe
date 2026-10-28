@@ -1,5 +1,5 @@
 import {PGlite} from '@electric-sql/pglite';import fs from 'node:fs';import vm from 'node:vm';import ts from 'typescript';import assert from 'node:assert/strict';
-const pg=new PGlite();await pg.exec('CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;');await pg.exec(fs.readFileSync('supabase/001_scoop_schema.sql','utf8'));await pg.exec(fs.readFileSync('supabase/004_scoop_categories.sql','utf8'));
+const pg=new PGlite();await pg.exec('CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;');await pg.exec(fs.readFileSync('supabase/001_scoop_schema.sql','utf8'));await pg.exec(fs.readFileSync('supabase/004_scoop_categories.sql','utf8'));await pg.exec(fs.readFileSync('supabase/005_scoop_product_delete.sql','utf8'));
 const fake={async rpc(name,{p_op,p_args,p_action,p_payload}){try{if(name==='scoop_catalog'){const {rows}=await pg.query('SELECT public.scoop_catalog($1,$2::jsonb) AS row',[p_action,JSON.stringify(p_payload)]);return {data:rows[0].row,error:null}}const {rows}=await pg.query('SELECT public.scoop_db($1,$2::jsonb) AS row',[p_op,JSON.stringify(p_args)]);return {data:rows.map(r=>r.row),error:null}}catch(error){return {data:null,error}}}};
 let reqHeaders=new Headers();const exported=new Map();function load(file){if(exported.has(file))return exported.get(file);const exports={};const code=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;vm.runInNewContext(code,{exports,require:n=>n.endsWith('product-sizes')?load('lib/product-sizes.ts'):n.endsWith('supabase-server')?{getSupabase:()=>fake,databaseConfigured:()=>true}:n.endsWith('promotions')?load('lib/promotions.ts'):n.endsWith('site-url')?{siteOrigin:req=>new URL(req.url).origin}:n.endsWith('/runtime')?load('lib/runtime.ts'):n.endsWith('staff-auth')?load('app/staff-auth.ts'):n==='next/headers'?{headers:async()=>reqHeaders}:null,Response,Request,URL,Headers,TextEncoder,crypto,File,Buffer,process:{env:{}},console});exported.set(file,exports);return exports;}
 const runtime=load('lib/runtime.ts'),auth=load('app/staff-auth.ts'),shop=load('app/api/shop/route.ts');
@@ -96,6 +96,32 @@ assert.equal((await call('POST',{...sizedOrder,nonce:'old-multi-id'})).status,40
 sr=await call('POST',{...sizedOrder,nonce:'single-size',promoCode:'',method:'pickup',items:[{id:'turkish',qty:1,sweetness:'سادة',extras:[]}]});assert.equal(sr.status,200);
 sizeData=(await call('GET',null,'','?token='+sr.data.order.token)).data.order.data;assert.equal(sizeData.total,1500);assert.equal(sizeData.items[0].sizeName,'فنجان واحد');
 console.log('PASS: size validation and permissions, server size prices, extras/promo/delivery totals, required/disabled/removed sizes, bundle size selection, immutable order snapshots and legacy single-size products');
+
+// Removing a product hides it persistently, stops linked offers and keeps old orders intact.
+const beforeDelete=(await call('GET',null,'','?token='+sizeOrderToken)).data.order.data;
+const seededWater=(await call('GET')).data.products.find(x=>x.id==='water');
+assert.equal((await call('POST',{action:'removeProduct',id:'water'},'')).status,403);
+assert.equal((await call('POST',{action:'removeProduct',id:'water'},cashier)).status,403);
+assert.equal((await call('POST',{action:'removeProduct',id:''},cookie)).status,400);
+assert.equal((await call('POST',{action:'removeProduct',id:'missing'},cookie)).status,404);
+assert.equal((await call('POST',{action:'removeProduct',id:'water'},cookie)).status,200);
+for(let i=0;i<2;i++)assert.equal((await call('GET')).data.products.some(x=>x.id==='water'),false);
+assert.equal((await call('GET',null,cookie,'?admin=1')).data.products.some(x=>x.id==='water'),false);
+assert.equal((await call('GET',null,cookie,'?admin=1')).data.offers.find(x=>x.id===sizeBundle.id).enabled,false);
+assert.equal((await call('GET')).data.offers.some(x=>x.id===sizeBundle.id),false);
+assert.equal((await call('POST',{action:'product',product:seededWater},cookie)).status,409);
+assert.equal((await call('POST',{action:'availability',id:'water',available:true},cookie)).status,404);
+assert.equal((await call('POST',{action:'order',name:'طالب',phone:'',method:'pickup',nonce:'deleted-water',items:[{id:'water',qty:1,extras:[]}]})).status,400);
+assert.equal((await call('POST',{...sizeBundleReq,nonce:'deleted-bundle'})).status,400);
+assert.deepEqual((await call('GET',null,'','?token='+sizeOrderToken)).data.order.data,beforeDelete);
+// Deleted products do not keep their category occupied.
+assert.equal((await call('POST',{action:'category',category:{name:'قسم مؤقت'}},cookie)).status,200);
+const temporary=(await call('GET')).data.categories.find(x=>x.name==='قسم مؤقت');
+assert.equal((await call('POST',{action:'product',product:{...seededWater,id:'temp-product',name:'منتج مؤقت',category:temporary.id}},cookie)).status,200);
+assert.equal((await call('POST',{action:'removeProduct',id:'temp-product'},cookie)).status,200);
+assert.equal((await call('POST',{action:'removeCategory',id:temporary.id},cookie)).status,200);
+console.log('PASS: manager-only product deletion, no seed resurrection or stale edit/availability restore, linked offers stopped, historical orders retained and empty category deletion');
 await pg.close();
+
 
 

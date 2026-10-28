@@ -20,3 +20,5 @@
 .category-admin-list{margin-top:24px}.category-admin-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--line,#e5e1d8)}.category-admin-row small{display:block;margin-top:5px;color:#777}.category-admin-row .actions{flex-wrap:wrap}.staff-service-state{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:20px 0}
 
 .size-options{border:0;padding:0;margin:22px 0}.size-options legend{font-weight:700;margin-bottom:12px}.size-options .choices{flex-wrap:wrap}.size-options button{display:flex;flex-direction:column;gap:5px;min-width:95px}.size-options small{font-size:.8rem}.size-editor-row{display:grid;grid-template-columns:minmax(90px,1fr) minmax(95px,1fr) auto auto;gap:10px;align-items:center;border-bottom:1px solid #e5e1d8;padding:10px 0}.size-editor-row label{margin:0}.size-editor-row input{width:100%;min-width:0}.size-editor-row .check input{width:auto}@media(max-width:480px){.size-editor-row{grid-template-columns:1fr 1fr}.size-editor-row .textbutton{justify-self:end}}
+
+.delete-product{color:#a53b30}.productrow .actions{flex-wrap:wrap;gap:8px}

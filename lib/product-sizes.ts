@@ -6,7 +6,7 @@ export function startingPrice(product:any):number|null{
   return Math.min(...(available.length?available:sizes).map(s=>s.price));
 }
 export function productOrderable(product:any):boolean{
-  return !!product?.available&&startingPrice(product)!==null&&(!sizesOf(product).length||sizesOf(product).some(s=>s.available!==false));
+  return !!product?.available&&!product?.deleted&&startingPrice(product)!==null&&(!sizesOf(product).length||sizesOf(product).some(s=>s.available!==false));
 }
 export function resolveSize(product:any,sizeId:unknown){
   const sizes=sizesOf(product);
