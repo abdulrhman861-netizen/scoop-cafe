@@ -1,12 +1,13 @@
 'use client';
 import {useEffect,useState} from 'react';
+import {sizesOf} from '../lib/product-sizes';
 import {Check,AlertCircle,ExternalLink,Printer} from 'lucide-react';
 export function LaunchChecklist({data,onNavigate}:{data:any,onNavigate:(tab:string)=>void}){
   const [health,H]=useState<any>(null),[staff,S]=useState<any[]|null>(null),[error,E]=useState('');
   async function refresh(){E('');try{const [h,s]=await Promise.all([fetch('/api/health'),fetch('/api/auth?staff=1')]);H(await h.json());const team=await s.json();if(!s.ok)throw Error(team.error||'تعذر تحميل الكادر');S(team.staff);}catch{E('تعذر تحديث الفحص؛ تحقق من الاتصال وأعد المحاولة.');}}
   useEffect(()=>{refresh()},[]);
   const products=data.products.filter((p:any)=>p.available);
-  const pricesReady=products.length>0&&products.every((p:any)=>Number.isInteger(p.price)&&p.price>0);
+  const pricesReady=products.length>0&&products.every((p:any)=>sizesOf(p).length?sizesOf(p).filter(s=>s.available!==false).length>0&&sizesOf(p).filter(s=>s.available!==false).every(s=>Number.isInteger(s.price)&&s.price>0):Number.isInteger(p.price)&&p.price>0);
   const checks=[
     {title:'اتصال قاعدة البيانات',ok:health?.database===true,note:health?.database?'الاتصال يعمل':'بانتظار فحص الاتصال'},
     {title:'أسعار المنيو',ok:pricesReady,note:pricesReady?'كل المنتجات المتوفرة لها أسعار':'حدد سعرًا لكل منتج متوفر قبل فتح الطلبات',tab:'products'},
